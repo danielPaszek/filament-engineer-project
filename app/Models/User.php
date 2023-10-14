@@ -60,6 +60,11 @@ class User extends Authenticatable implements HasTenants
         return $this->belongsToMany(Project::class);
     }
 
+    public function myProjects(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
+
     public function canAccessTenant(Model $tenant): bool
     {
         return true;
