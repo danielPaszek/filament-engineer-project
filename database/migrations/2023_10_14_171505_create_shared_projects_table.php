@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('shared_projects', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('user_id')->constrained();
         });
     }
 
