@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\App\Resources;
+namespace App\Filament\Resources;
 
-use App\Filament\App\Resources\DatasetResource\Pages;
-use App\Filament\App\Resources\DatasetResource\RelationManagers;
-use App\Models\Dataset;
+use App\Filament\Resources\ProjectResource\Pages;
+use App\Filament\Resources\ProjectResource\RelationManagers;
+use App\Models\Project;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DatasetResource extends Resource
+class ProjectResource extends Resource
 {
-    protected static ?string $model = Dataset::class;
+    protected static ?string $model = Project::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,11 +23,12 @@ class DatasetResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('project_id')
-                    ->relationship('project', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('user_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -35,7 +36,9 @@ class DatasetResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project_id')
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('user_id')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
@@ -63,21 +66,21 @@ class DatasetResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-
+    
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-
+    
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDatasets::route('/'),
-            'create' => Pages\CreateDataset::route('/create'),
-            'view' => Pages\ViewDataset::route('/{record}'),
-            'edit' => Pages\EditDataset::route('/{record}/edit'),
+            'index' => Pages\ListProjects::route('/'),
+            'create' => Pages\CreateProject::route('/create'),
+            'view' => Pages\ViewProject::route('/{record}'),
+            'edit' => Pages\EditProject::route('/{record}/edit'),
         ];
-    }
+    }    
 }

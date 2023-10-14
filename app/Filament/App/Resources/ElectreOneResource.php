@@ -19,6 +19,10 @@ class ElectreOneResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Electre 1s';
+    protected static ?string $modelLabel = 'Electre 1s';
+    protected static ?string $pluralModelLabel = 'Electre 1s';
+
     public static function form(Form $form): Form
     {
         return $form
@@ -67,14 +71,14 @@ class ElectreOneResource extends Resource
                 Tables\Actions\CreateAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -83,5 +87,5 @@ class ElectreOneResource extends Resource
             'view' => Pages\ViewElectreOne::route('/{record}'),
             'edit' => Pages\EditElectreOne::route('/{record}/edit'),
         ];
-    }    
+    }
 }

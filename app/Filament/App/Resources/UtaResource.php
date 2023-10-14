@@ -2,9 +2,9 @@
 
 namespace App\Filament\App\Resources;
 
-use App\Filament\App\Resources\DatasetResource\Pages;
-use App\Filament\App\Resources\DatasetResource\RelationManagers;
-use App\Models\Dataset;
+use App\Filament\App\Resources\UtaResource\Pages;
+use App\Filament\App\Resources\UtaResource\RelationManagers;
+use App\Models\Uta;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,21 +13,25 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class DatasetResource extends Resource
+class UtaResource extends Resource
 {
-    protected static ?string $model = Dataset::class;
+    protected static ?string $model = Uta::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $navigationLabel = 'Uta';
+
+    protected static ?string $modelLabel = 'Uta';
+    protected static ?string $pluralModelLabel = 'Uta';
+
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('project_id')
-                    ->relationship('project', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Forms\Components\TextInput::make('project_id')
+                    ->required()
+                    ->numeric(),
             ]);
     }
 
@@ -74,10 +78,10 @@ class DatasetResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDatasets::route('/'),
-            'create' => Pages\CreateDataset::route('/create'),
-            'view' => Pages\ViewDataset::route('/{record}'),
-            'edit' => Pages\EditDataset::route('/{record}/edit'),
+            'index' => Pages\ListUtas::route('/'),
+            'create' => Pages\CreateUta::route('/create'),
+            'view' => Pages\ViewUta::route('/{record}'),
+            'edit' => Pages\EditUta::route('/{record}/edit'),
         ];
     }
 }
