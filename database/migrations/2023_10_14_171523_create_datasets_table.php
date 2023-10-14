@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('datasets', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained(); // TODO: one to many. Should be one to one
             $table->timestamps();
         });
     }

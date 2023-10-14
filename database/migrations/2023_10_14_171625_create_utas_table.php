@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('utas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->constrained();
             $table->timestamps();
         });
     }

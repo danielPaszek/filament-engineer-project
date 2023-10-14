@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('electre_criteria_settings', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->foreignId('user_id');
+            $table->foreignId('electre_one_id')->constrained();
+            $table->foreignId('criterion_id')->constrained();
+            $table->double('weight');
+            $table->double('q');
+            $table->double('p');
+            $table->double('v');
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::dropIfExists('electre_criteria_settings');
     }
 };
