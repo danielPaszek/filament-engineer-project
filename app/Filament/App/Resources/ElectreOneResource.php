@@ -75,7 +75,7 @@ class ElectreOneResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ElectreCriteriaSettingsRelationManager::class
         ];
     }
 
