@@ -14,4 +14,9 @@ class ElectreCriteriaSetting extends Model
     {
         return $this->belongsTo(ElectreOne::class);
     }
+
+    public function criterion(): BelongsTo
+    {
+        return $this->belongsTo(Criterion::class);
+    }
 }

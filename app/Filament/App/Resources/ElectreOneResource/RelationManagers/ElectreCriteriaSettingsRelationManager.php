@@ -50,9 +50,7 @@ class ElectreCriteriaSettingsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('id')
             ->columns([
-                Tables\Columns\TextColumn::make('id'),
-                Tables\Columns\TextColumn::make('electre_one_id'),
-                Tables\Columns\TextColumn::make('criterion_id'),
+                Tables\Columns\TextColumn::make('criterion.name'),
                 Tables\Columns\TextColumn::make('weight'),
                 Tables\Columns\TextColumn::make('q'),
                 Tables\Columns\TextColumn::make('p'),

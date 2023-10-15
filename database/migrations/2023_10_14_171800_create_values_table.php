@@ -16,7 +16,6 @@ return new class extends Migration
             $table->double('value');
             $table->foreignId('criterion_id')->constrained();
             $table->foreignId('variant_id')->constrained();
-            $table->timestamps();
         });
     }
 

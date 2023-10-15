@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('electre_one_id')->constrained();
             $table->foreignId('criterion_id')->constrained();
-            $table->double('weight');
-            $table->double('q');
-            $table->double('p');
-            $table->double('v');
-            $table->timestamps();
+            $table->double('weight')->nullable();
+            $table->double('q')->nullable();
+            $table->double('p')->nullable();
+            $table->double('v')->nullable();
+            $table->timestamps(); // see last change by teacher
         });
     }
 

@@ -27,9 +27,6 @@ class ElectreOneResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('project_id')
-                    ->required()
-                    ->numeric(),
                 Forms\Components\TextInput::make('lambda')
                     ->required()
                     ->numeric(),
@@ -40,9 +37,6 @@ class ElectreOneResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('lambda')
                     ->numeric()
                     ->sortable(),

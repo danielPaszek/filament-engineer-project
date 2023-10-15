@@ -34,4 +34,9 @@ class Project extends Model
     {
         return $this->hasManyThrough(Criterion::class, Dataset::class);
     }
+
+    public function electreOnes(): HasMany
+    {
+        return $this->hasMany(ElectreOne::class);
+    }
 }
