@@ -3,6 +3,8 @@
 namespace App\Filament\App\Resources\ElectreOneResource\RelationManagers;
 
 use App\Models\Criterion;
+use App\Models\ElectreOne;
+use App\Models\Project;
 use Filament\Facades\Filament;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,9 +26,14 @@ class ElectreCriteriaSettingsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Select::make('criterion_id')
                     ->options(function(Get $get) {
+                        /** @var Project $project */
                         $project = Filament::getTenant();
+//                        /** @var ElectreOne $electreOne */
+//                        $electreOne = $this->getOwnerRecord();
+//                        TODO: try to filter not in electreOne->electreCriteriaSettings
                         return $project->criteria->pluck('name', 'id');
                     })
+                    ->native(false)
                     ->searchable()
                     ->preload()
                     ->required(),

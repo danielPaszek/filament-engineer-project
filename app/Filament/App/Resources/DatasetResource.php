@@ -19,10 +19,13 @@ class DatasetResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    static ?string $tenantRelationshipName = 'dataset';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+//                TODO: change to csv file. project_id is automatically filled btw
                 Forms\Components\Select::make('project_id')
                     ->relationship('project', 'name')
                     ->searchable()

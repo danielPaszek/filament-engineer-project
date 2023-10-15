@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Project extends Model
 {
@@ -38,5 +39,10 @@ class Project extends Model
     public function electreOnes(): HasMany
     {
         return $this->hasMany(ElectreOne::class);
+    }
+
+    public function dataset(): HasOne
+    {
+        return $this->hasOne(Dataset::class);
     }
 }

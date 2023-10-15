@@ -7,6 +7,7 @@ use App\Filament\App\Resources\ElectreOneResource\RelationManagers;
 use App\Models\ElectreOne;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
