@@ -1,3 +1,19 @@
+# My information
+## Start
+- install php (xampp is fine) and composer (php package manager)
+- run `composer install`
+- run `php artisan migrate`
+- run `php artisan serve` - you will app on 127.0.0.1:8000
+## Routes
+### Current routes are
+- '/' - default laravel page
+- '/app' - app for students
+- '/admin' - app for teachers
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">

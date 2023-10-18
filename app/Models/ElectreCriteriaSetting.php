@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ElectreCriteriaSetting extends Model
 {
     use HasFactory;
-
+//TODO: add polymphorfic relationship to electreTri
     public function electreOne(): BelongsTo
     {
         return $this->belongsTo(ElectreOne::class);
