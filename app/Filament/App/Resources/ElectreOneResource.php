@@ -21,6 +21,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 
 class ElectreOneResource extends Resource
 {
@@ -110,25 +111,37 @@ class ElectreOneResource extends Resource
         for ($i = 0; $i < $variantCount * $variantCount; $i++) {
             $concordanceColumns[] = TestEntry::make('concordance.' . $i)->label((string)$i);
         }
-        $disconcordanceCoulmns = [];
+        $disconcordanceCoulumns = [];
         for ($i = 0; $i < $variantCount * $variantCount; $i++) {
-            $disconcordanceCoulmns[] = TestEntry::make('disconcordance.' . $i)->label((string)$i);
+            $disconcordanceCoulumns[] = TestEntry::make('discordance.' . $i)->label((string)$i);
+        }
+        $combinedColumns = [];
+        for ($i = 0; $i < $variantCount * $variantCount; $i++) {
+            $combinedColumns[] = TestEntry::make('final.' . $i)->label((string)$i);
         }
         return $infolist->schema([
             TextEntry::make('lambda'),
-            Section::make('concordance')
-                ->schema(
+            Section::make('tables')
+                ->schema([
+                    Section::make('concordance')
+                        ->schema(
                             $concordanceColumns
                         )
-            ->columns(3),
-            Section::make('disconcordance')
-                ->schema(
-                    $disconcordanceCoulmns
-                )
-                ->columns(3),
-            TextEntry::make('combined'),
-            TextEntry::make('relations'),
-            TextEntry::make('clean_graph'),
+                        ->columns(3),
+                    Section::make('discordance')
+                        ->schema(
+                            $disconcordanceCoulumns
+                        )
+                        ->columns(3),
+                    Section::make('final')
+                        ->schema(
+                            $combinedColumns
+                        )
+                        ->columns(3),
+                    TextEntry::make('relations'),
+                    TextEntry::make('clean_graph'),
+                ]),
+
         ]);
     }
 
@@ -151,39 +164,70 @@ class ElectreOneResource extends Resource
 
     protected static function myInitData(?\Illuminate\Database\Eloquent\Model $record)
     {
-        $record['concordance'] = Arr::flatten( [
+        $response = Http::asJson()->post('127.0.0.1:8080/electre1s', ['data' => [
+            'lambda' => 0.5,
+            'criteria' => [
                 [
-                    1.0,
-                    0.45000000000000034,
-                    1.0
+                    "preferenceType" => "cost",
+                    "weight" => 1.0,
+                    "q" => 0.9,
+                    "p" => 2.2,
+                    "v" => 3.0
                 ],
                 [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                [
-                    1.0,
-                    0.5999999999999998,
-                    1.0
+                    "preferenceType" => "gain",
+                    "weight" => 9.0,
+                    "q" => 1.0,
+                    "p" => 1.6,
+                    "v" => 3.5
                 ]
-            ]);
-        $record['disconcordance'] = Arr::flatten( [
-            [
-                0.0,
-                0.0,
-                0.0
             ],
-            [
-                0.0,
-                0.0,
-                0.0
+            "variants" => [
+                [
+                    "values" => [
+                        10.8,
+                        4.7
+                    ]
+                ],
+                [
+                    "values" => [
+                        8.0,
+                        6.0
+                    ]
+                ],
+                [
+                    "values" => [
+                        11.0,
+                        4.8
+                    ]
+                ]
             ],
-            [
-                0.0,
-                1.0,
-                0.0
+            "b" => [
+                [
+                    "values" => [
+                        10.8,
+                        4.7
+                    ]
+                ],
+                [
+                    "values" => [
+                        8.0,
+                        6.0
+                    ]
+                ],
+                [
+                    "values" => [
+                        11.0,
+                        4.8
+                    ]
+                ]
             ]
+        ]
         ]);
+        $body = json_decode($response->body());
+        foreach ($body as $key => $matrix) {
+            $record[$key] = Arr::flatten($matrix);
+        }
+        return $record;
     }
 }
