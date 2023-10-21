@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('electre_criteria_settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('electre_one_id')->constrained();
-            $table->foreignId('criterion_id')->constrained();
+            $table->foreignId('electre_one_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('criterion_id')->constrained()->cascadeOnDelete();
             $table->double('weight')->nullable();
             $table->double('q')->nullable();
             $table->double('p')->nullable();
