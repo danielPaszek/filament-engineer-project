@@ -30,9 +30,14 @@ class Project extends Model
         return $this->hasMany(User::class);
     }
 
-    public function criteria(): HasManyThrough
+    public function criteria(): HasMany
     {
-        return $this->hasManyThrough(Criterion::class, Dataset::class);
+        return $this->hasMany(Criterion::class, 'dataset_id', 'dataset_id');
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(Variant::class, 'dataset_id', 'dataset_id');
     }
 
     public function electreOnes(): HasMany

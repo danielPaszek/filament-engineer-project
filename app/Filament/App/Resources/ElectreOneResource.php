@@ -102,10 +102,15 @@ class ElectreOneResource extends Resource
     {
         /** @var ElectreOne $record */
         $record = $infolist->getRecord();
-        self::myInitData($record);
+        try {
+            self::myInitData($record);
+
+        } catch (\Exception $exception) {
+            throw new \Exception("Probably connection with spring");
+        }
 //        $electreCriteria = $record->electreCriteriaSettings;
 //        $electreCriteriaCount = $electreCriteria->count();
-        $variants = Filament::getTenant()->hasManyThrough(Variant::class, Dataset::class);
+        $variants = Filament::getTenant()->variants;
         $variantCount = $variants->count();
         $concordanceColumns = [];
         for ($i = 0; $i < $variantCount * $variantCount; $i++) {
