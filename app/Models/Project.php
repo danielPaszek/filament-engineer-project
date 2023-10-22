@@ -14,7 +14,6 @@ class Project extends Model
 {
     use HasFactory;
 
-//    TODO: do something with relationship with user. Owner, viewer etc
 
     public function members(): BelongsToMany
     {
@@ -41,8 +40,8 @@ class Project extends Model
         return $this->hasMany(ElectreOne::class);
     }
 
-    public function dataset(): HasOne
+    public function dataset(): BelongsTo
     {
-        return $this->hasOne(Dataset::class);
+        return $this->belongsTo(Dataset::class);
     }
 }

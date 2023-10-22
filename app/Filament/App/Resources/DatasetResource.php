@@ -11,26 +11,29 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class DatasetResource extends Resource
 {
     protected static ?string $model = Dataset::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+//    change tenant filter to user filter
+    public static function scopeEloquentQueryToTenant(Builder $query, ?Model $tenant): Builder
+    {
 
-    static ?string $tenantRelationshipName = 'dataset';
+        $query->whereRelation('user', 'id', '=', auth()->user()->id);
+        return $query;
+    }
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-//                TODO: change to csv file. project_id is automatically filled btw
-                Forms\Components\Select::make('project_id')
-                    ->relationship('project', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required(),
+                Forms\Components\TextInput::make('name')
+                ->required()
             ]);
     }
 
@@ -38,9 +41,7 @@ class DatasetResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('project_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('id'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -70,7 +71,7 @@ class DatasetResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\DatasetUsersRelationManager::class,
         ];
     }
 

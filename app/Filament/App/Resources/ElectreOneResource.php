@@ -119,6 +119,10 @@ class ElectreOneResource extends Resource
         for ($i = 0; $i < $variantCount * $variantCount; $i++) {
             $combinedColumns[] = TestEntry::make('final.' . $i)->label((string)$i);
         }
+        $relationsColumns = [];
+        for ($i = 0; $i < $variantCount * $variantCount; $i++) {
+            $relationsColumns[] = TestEntry::make('relations.' . $i)->label((string)$i);
+        }
         return $infolist->schema([
             TextEntry::make('lambda'),
             Section::make('tables')
@@ -138,7 +142,11 @@ class ElectreOneResource extends Resource
                             $combinedColumns
                         )
                         ->columns(3),
-                    TextEntry::make('relations'),
+                    Section::make('relations')
+                        ->schema(
+                            $relationsColumns
+                        )
+                        ->columns(3),
                     TextEntry::make('clean_graph'),
                 ]),
 
@@ -164,6 +172,8 @@ class ElectreOneResource extends Resource
 
     protected static function myInitData(?\Illuminate\Database\Eloquent\Model $record)
     {
+//        Create Service
+//        url with containers could have some problems???
         $response = Http::asJson()->post('127.0.0.1:8080/electre1s', ['data' => [
             'lambda' => 0.5,
             'criteria' => [
