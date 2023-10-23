@@ -1,9 +1,9 @@
 # My information
 ## Start
-- install php (xampp is fine) and composer (php package manager)
-- run `composer install`
+- run `./first-up up` command
+- run `composer install` (not sure if still required I think up will do it)
 - run `php artisan migrate`
-- run `php artisan serve` - you will app on 127.0.0.1:8000
+- run `php artisan serve` - you will app on 127.0.0.1:3000
 ## Routes
 ### Current routes are
 - '/' - default laravel page
