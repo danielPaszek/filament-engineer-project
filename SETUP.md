@@ -1,5 +1,6 @@
 ## Setup
 1. clone project in wsl (containers are much faster than on windows)
+2. create `.env` and copy `.env.example` content there
 2. `docker run --rm \
    -u "$(id -u):$(id -g)" \
    -v "$(pwd):/var/www/html" \
