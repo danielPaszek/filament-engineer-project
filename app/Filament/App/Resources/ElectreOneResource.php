@@ -102,12 +102,12 @@ class ElectreOneResource extends Resource
     {
         /** @var ElectreOne $record */
         $record = $infolist->getRecord();
-        try {
+//        try {
             self::myInitData($record);
 
-        } catch (\Exception $exception) {
-            throw new \Exception("Probably connection with spring");
-        }
+//        } catch (\Exception $exception) {
+//            throw new \Exception("Probably connection with spring");
+//        }
 //        $electreCriteria = $record->electreCriteriaSettings;
 //        $electreCriteriaCount = $electreCriteria->count();
         $variants = Filament::getTenant()->variants;
@@ -179,7 +179,7 @@ class ElectreOneResource extends Resource
     {
 //        Create Service
 //        url with containers could have some problems???
-        $response = Http::asJson()->post('127.0.0.1:8080/electre1s', ['data' => [
+        $response = Http::asJson()->post('host.docker.internal:8080/electre1s', ['data' => [
             'lambda' => 0.5,
             'criteria' => [
                 [
