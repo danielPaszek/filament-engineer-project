@@ -6,6 +6,7 @@ use App\Events\AfterDatasetCreated;
 use App\Filament\App\Resources\DatasetResource;
 use App\Models\Dataset;
 use Filament\Actions;
+use Filament\Facades\Filament;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -28,5 +29,10 @@ class CreateDataset extends CreateRecord
         $record->save();
         AfterDatasetCreated::dispatch($record, $file);
         return $record;
+    }
+
+    protected function getRedirectUrl(): string
+    {
+        return Filament::getUrl() . '/profile';
     }
 }
