@@ -7,9 +7,9 @@
    -w /var/www/html \
    laravelsail/php82-composer:latest \
    composer install --ignore-platform-reqs`
-3. `vendor/bin/sail up -d`
-4. You should see app on 127.0.0.1:3000
-5. Run migrations `vendor/bin/sail artisan migrate:fresh` //fresh drops old tables
+3. `vendor/bin/sail up` (run `bash vendor/bin/sail up` (or `sh`) if there is a problem)
+5. Run migrations `vendor/bin/sail artisan migrate:fresh` //fresh drops old tables 
+6. You should see app on 127.0.0.1:3000
 
 ## Troubleshooting
 There can be problem with permissions so give ./vendor 777
