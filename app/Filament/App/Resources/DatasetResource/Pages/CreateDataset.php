@@ -2,6 +2,7 @@
 
 namespace App\Filament\App\Resources\DatasetResource\Pages;
 
+use App\Events\AfterDatasetCreated;
 use App\Filament\App\Resources\DatasetResource;
 use App\Models\Dataset;
 use Filament\Actions;
@@ -21,6 +22,7 @@ class CreateDataset extends CreateRecord
         $record->save();
         $record->members()->attach(auth()->user()); // populate dataset_user too
         $record->save();
+        AfterDatasetCreated::dispatch();
         return $record;
     }
 }

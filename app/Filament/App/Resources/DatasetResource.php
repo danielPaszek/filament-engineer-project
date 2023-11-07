@@ -4,6 +4,7 @@ namespace App\Filament\App\Resources;
 
 use App\Filament\App\Resources\DatasetResource\Pages;
 use App\Filament\App\Resources\DatasetResource\RelationManagers;
+use App\Imports\DatasetImport;
 use App\Models\Dataset;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,6 +14,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DatasetResource extends Resource
 {
@@ -30,6 +32,11 @@ class DatasetResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $dataset = Dataset::create([
+            'name' => 'import_test',
+            'user_id' => auth()->user()->id,
+        ]);
+        Excel::import(new DatasetImport($dataset->id), "example_dataset.csv");
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
