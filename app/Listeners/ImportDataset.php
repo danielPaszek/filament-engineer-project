@@ -3,8 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\AfterDatasetCreated;
+use App\Imports\DatasetImport;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ImportDataset
 {
@@ -21,6 +23,8 @@ class ImportDataset
      */
     public function handle(AfterDatasetCreated $event): void
     {
-        //
+        $dataset = $event->dataset;
+        Excel::import(new DatasetImport($dataset->id), $event->file);
+
     }
 }

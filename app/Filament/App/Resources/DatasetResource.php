@@ -32,15 +32,13 @@ class DatasetResource extends Resource
 
     public static function form(Form $form): Form
     {
-        $dataset = Dataset::create([
-            'name' => 'import_test',
-            'user_id' => auth()->user()->id,
-        ]);
-        Excel::import(new DatasetImport($dataset->id), "example_dataset.csv");
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->required(),
+                Forms\Components\FileUpload::make('csv_file')
                 ->required()
+                ->storeFiles(false)
             ]);
     }
 

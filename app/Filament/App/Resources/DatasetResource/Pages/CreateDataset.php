@@ -8,6 +8,7 @@ use App\Models\Dataset;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class CreateDataset extends CreateRecord
 {
@@ -16,13 +17,16 @@ class CreateDataset extends CreateRecord
 //    change tenant filter to user filter
     protected function handleRecordCreation(array $data): Model
     {
+        /** @var TemporaryUploadedFile $file */
+        $file = $data['csv_file'];
+        unset($data['csv_file']);
         /** @var Dataset $record */
         $record = new ($this->getModel())($data);
         $record->user()->associate(auth()->user());
         $record->save();
         $record->members()->attach(auth()->user()); // populate dataset_user too
         $record->save();
-        AfterDatasetCreated::dispatch();
+        AfterDatasetCreated::dispatch($record, $file);
         return $record;
     }
 }
